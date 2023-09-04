@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const User = require('../schema/user');
-const { createHmac, randomBytes } = require('node:crypto');
+const { createHmac, randomBytes } = require('crypto');
 const {createJwtToken} = require('../service/authentication');
 const router = Router();
 

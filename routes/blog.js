@@ -12,25 +12,28 @@ router.get('/add-new' , (req,res)=>{
 });
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, path.resolve(`./public/upload`));
-    },
-    filename: function (req, file, cb) {
-      const fileName = `${Date.now()}-${file.originalname}`
-      cb(null, fileName);
-    }
-  })
-  const upload = multer({ storage: storage });
-router.post('/',upload.single('coverImage'),async(req,res)=>{
-    const {title,body} = req.body;
+  destination: function (req, file, cb) {
+    cb(null, path.resolve(`./public/upload`));
+  },
+  filename: function (req, file, cb) {
+    const fileName = `${Date.now()}-${file.originalname}`
+    cb(null, fileName);
+  }
+})
+
+const upload = multer({ storage: storage });
+
+router.post('/', upload.single('coverImage'), async (req, res) => {
+  const { title, body } = req.body;
   await Blog.create({
-        body,
-        title,
-        createdBy:req.user._id,
-        coverImageURL:`upload/${req.file.filename}`,
-    })
-    return res.redirect('/');
+    body,
+    title,
+    createdBy: req.user._id,
+    coverImageURL: `/upload/${req.file.filename}`, // Corrected URL path
+  })
+  return res.redirect('/');
 });
+
 
 router.get('/:id',async(req,res)=>{
   const blog = await Blog.findById(req.params.id).populate("createdBy");

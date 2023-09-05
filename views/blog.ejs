@@ -15,9 +15,12 @@
     <p><%= blog.body %></p>
 </div>
 <div class="container mt-3">
-    <img src="/<%= blog.createdBy.profileImageURL %>" alt="profileImage" width="50px">
-    <%= blog.createdBy.fullName %>
-</div>
+    <% if (blog.createdBy) { %>
+      <img src="<%= blog.createdBy.profileImageURL %>" alt="profileImage" width="50px">
+      <%= blog.createdBy.fullName %>
+    <% } %>
+  </div>
+  
 <div class="container mt-3">
     <h2>Comments(<%= allComments.length %>)</h2>
     <% if (locals.user) { %>
@@ -47,11 +50,12 @@
                         </div>
                         <div class="col-md-4 text-right "> <!-- Image and full name on the right -->
                             <div class="comment-details ms-5">
-                                
-                                <img src="/<%= comment.createdBy.profileImageURL %>" alt="profileImage" width="40px" />
-                                <%= comment.createdBy.fullName %>
-                            </div>
-                        </div>
+                                <% if (comment.createdBy) { %>
+                                  <img src="/<%= comment.createdBy.profileImageURL %>" alt="profileImage" width="40px" />
+                                  <%= comment.createdBy.fullName %>
+                                <% } %>
+                              </div>
+                              
                     </div>
                 </div>
             </div>
